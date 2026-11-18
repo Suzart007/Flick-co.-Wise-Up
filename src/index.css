@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* Tokens de tema da Flick Co. (cores tiradas da logo). O laranja fica só em detalhes. */
+@theme {
+  --color-ink: #111111;
+  --color-paper: #ffffff;
+  --color-mist: #e7e6e4;
+  --color-orange: #f97316;
+  --color-orange-soft: #fb923c;
+
+  --color-gray-50: #fafaf9;
+  --color-gray-100: #f3f2f0;
+  --color-gray-200: #e7e6e4;
+  --color-gray-300: #d4d3d0;
+  --color-gray-400: #a3a29f;
+  --color-gray-500: #737270;
+  --color-gray-600: #525150;
+  --color-gray-700: #3a3938;
+  --color-gray-800: #232221;
+  --color-gray-900: #171716;
+
+  --color-danger: #b42318;
+  --color-danger-soft: #fef3f2;
+  --color-success: #146c43;
+  --color-success-soft: #f0faf4;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --tracking-display: -0.03em;
+  --tracking-label: 0.18em;
+
+  --animate-fade-in: fade-in 0.3s ease-out;
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* Cores de apoio que mudam conforme o fundo da seção (data-tone). */
+:root {
+  --muted: var(--color-gray-600);
+  --line: var(--color-gray-300);
+}
+[data-tone="ink"] {
+  --muted: var(--color-gray-300);
+  --line: rgb(255 255 255 / 0.18);
+}
+
+@utility text-muted { color: var(--muted); }
+@utility border-line { border-color: var(--line); }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--color-orange); color: var(--color-ink); }
+
+/* Anel de foco laranja, bem visível em fundo claro e escuro. */
+:focus-visible {
+  outline: 3px solid var(--color-orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Entrada suave dos blocos (ver componente Reveal). */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Controle deslizante (horas por dia). */
+.range-horas {
+  --pct: 0%;
+  --track: var(--color-gray-300);
+  --fill: var(--color-ink);
+  --thumb: var(--color-ink);
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+.range-horas[data-tone="dark"] {
+  --track: rgb(255 255 255 / 0.25);
+  --fill: var(--color-paper);
+  --thumb: var(--color-paper);
+}
+.range-horas::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--fill) var(--pct), var(--track) var(--pct));
+}
+.range-horas::-moz-range-track { height: 4px; border-radius: 999px; background: var(--track); }
+.range-horas::-moz-range-progress { height: 4px; border-radius: 999px; background: var(--fill); }
+.range-horas::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  margin-top: -10px;
+  border-radius: 999px;
+  background: var(--thumb);
+  border: 3px solid var(--color-orange);
+}
+.range-horas::-moz-range-thumb {
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--thumb);
+  border: 3px solid var(--color-orange);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}

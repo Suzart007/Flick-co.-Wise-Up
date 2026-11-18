@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Flick Co. WISE UP">
+  <circle cx="32" cy="32" r="32" fill="#111111"/>
+  <path d="M32 44V21M23 29.5 32 20.5l9 9" fill="none" stroke="#FB923C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="45" cy="46" r="4.5" fill="#F97316"/>
+</svg>
