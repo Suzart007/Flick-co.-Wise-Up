@@ -25,7 +25,7 @@ react-router-dom · Fetch API (sem Axios) · Inter (via `@fontsource-variable/in
 
 ```
 src/
-  assets/       logo da Flick Co.
+  assets/       logo da Flick Co. e fotos dos integrantes
   components/   Button, Card, Field, Alert, Loading, EmptyState, Accordion, Logo, MobileMenu, Header, Footer...
   pages/        Home, Integrantes, IntegranteDetalhe, Sobre, Faq, Contato, Autoavaliacao, Resultado, Reavaliacao, Dicas
   services/     http.ts (fetch + erros) e um arquivo por recurso da API
@@ -101,26 +101,19 @@ direto funciona. Configure `VITE_API_BASE_URL` nas variáveis de ambiente do pro
 
 ## Integrantes
 
-| Nome | RM |
-|---|---|
-| Kaio Marcus Macedo Chiappinelli | 573365 |
-| Matheus Vecchi | 569749 |
-| Guilherme Souza Suzart | 569884 |
-| Rafael Rodrigues Trindade | 564303 |
-| Henry Vitor Medeiros Bascope | 573576 |
+| Nome | RM | GitHub | LinkedIn |
+|---|---|---|---|
+| Kaio Marcus Macedo Chiappinelli | 573365 | [KaioChiappinelli](https://github.com/KaioChiappinelli) | [perfil](https://www.linkedin.com/in/kaio-chiappinelli-183106322) |
+| Matheus Vecchi | 569749 | [ogvecchi](https://github.com/ogvecchi) | [perfil](https://www.linkedin.com/in/matheusvecchi-) |
+| Guilherme Souza Suzart | 569884 | [Suzart007](https://github.com/Suzart007) | [perfil](https://www.linkedin.com/in/guilherme-suzart-ba83193b3) |
+| Henry Vitor Medeiros Bascope | 573576 | [HenryBascope](https://github.com/HenryBascope) | [perfil](https://www.linkedin.com/in/henrybascope/) |
 
 ## Links
 
-- **GitHub:** [PREENCHER link do repositório público]
+- **GitHub:** [github.com/Suzart007/Flick-co.-Wise-Up](https://github.com/Suzart007/Flick-co.-Wise-Up)
 - **Vercel (site publicado):** [PREENCHER URL da Vercel]
 - **API (Render):** [PREENCHER URL da API]
-- **YouTube (vídeo de até 3 min):** [PREENCHER link do vídeo]
-
-## Contato
-
-[PREENCHER e-mail do grupo]
 
 ## Documentação extra
 
 - [Contrato da API](docs/contrato-api.md)
-"# Flick-co.-Wise-Up" 
