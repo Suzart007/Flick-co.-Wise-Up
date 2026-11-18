@@ -114,6 +114,10 @@ direto funciona. Configure `VITE_API_BASE_URL` nas variáveis de ambiente do pro
 - **Vercel (site publicado):** [PREENCHER URL da Vercel]
 - **API (Render):** [PREENCHER URL da API]
 
+## Contato
+
+[we.flickcompany@gmail.com](mailto:we.flickcompany@gmail.com)
+
 ## Documentação extra
 
 - [Contrato da API](docs/contrato-api.md)
