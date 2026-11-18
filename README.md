@@ -33,8 +33,9 @@ src/
   data/         integrantes, FAQ, navegação e opções dos formulários
   hooks/        useApi, useTitulo, useContagem...
   utils/        calculos.ts e validacao.ts (lógica sem React)
-docs/           contrato da API, roteiros, plano de commits, prints (docs/prints) e auditoria (docs/auditoria)
-dev-mock/       servidor de mock só para desenvolvimento (não vai no zip)
+public/         favicon
+scripts/        zip.mjs (gera o zip da entrega)
+docs/           contrato da API Java (endpoints, corpos e respostas)
 ```
 
 ## Páginas e rotas
@@ -61,9 +62,8 @@ npm run build            # build de produção (tsc + vite)
 npm run preview          # serve o build em http://localhost:4173
 ```
 
-> **Windows:** não deixe o projeto numa pasta com `&` no caminho (ex.: `Wise Up (Front & Java)`). O `cmd.exe` corta
-> o caminho no `&` e o `npm run dev`/`npm run build` falham com "Cannot find module ...\typescript\bin\tsc". Renomeie a
-> pasta (ex.: `Wise Up (Front e Java)`) ou rode direto: `node node_modules/vite/bin/vite.js`.
+> **Windows:** evite pastas com `&` no caminho. O `cmd.exe` corta o caminho no `&` e o `npm run dev`/`npm run build`
+> falham com "Cannot find module ...\typescript\bin\tsc".
 
 ### Variáveis de ambiente
 
@@ -80,14 +80,10 @@ A API de verdade está na pasta `Wise Up - Java` (Spring Boot). Para testar sem 
 (banco em memória) e use `VITE_API_BASE_URL=http://localhost:8080`. Veja o README dessa pasta. O contrato está em
 [docs/contrato-api.md](docs/contrato-api.md).
 
-### Mock local (opcional, só desenvolvimento)
-
-Sem Java instalado: `npm run mock` (porta 8080) imita o contrato com dados em memória. O app final deve falar com a **API real**.
-
 ### Gerar o zip da entrega
 
 ```bash
-npm run zip    # cria wise-up-front.zip sem node_modules, dist, .git, .env e dev-mock; falha se passar de 50 MB
+npm run zip    # cria wise-up-front.zip sem node_modules, dist, .git e .env; falha se passar de 50 MB
 ```
 
 ## Deploy na Vercel
@@ -96,8 +92,7 @@ O arquivo `vercel.json` reescreve todas as rotas para `/index.html` (SPA), entã
 direto funciona. Configure `VITE_API_BASE_URL` nas variáveis de ambiente do projeto e refaça o deploy.
 
 1. Na Vercel: **Add New → Project** e importe o repositório do GitHub (Framework Preset: **Vite**; Build Command
-   `npm run build`; Output Directory `dist`). Se o front ficar numa subpasta do repositório, aponte o **Root Directory**
-   para ela.
+   `npm run build`; Output Directory `dist`).
 2. Em **Settings → Environment Variables**, crie `VITE_API_BASE_URL` com a URL da API no Render (sem barra no final).
 3. Faça o deploy (ou **Redeploy**, se a variável foi criada depois: o Vite lê a variável na hora do build).
 4. Na API (Render), confira se `CORS_ORIGENS` aceita o domínio da Vercel (por padrão já aceita `https://*.vercel.app`).
@@ -128,9 +123,4 @@ direto funciona. Configure `VITE_API_BASE_URL` nas variáveis de ambiente do pro
 ## Documentação extra
 
 - [Contrato da API](docs/contrato-api.md)
-- [Roteiro do vídeo de 3 minutos](docs/roteiro_video_3min.md)
-- [Roteiro da apresentação presencial](docs/roteiro_apresentacao.md)
-- [Plano de commits por integrante](docs/plano_commits.md)
-- [Relatório explicativo do projeto de front](docs/relatorio_front.md)
-- [Checklist da rubrica](CHECKLIST_FRONT.md)
 "# Flick-co.-Wise-Up" 
