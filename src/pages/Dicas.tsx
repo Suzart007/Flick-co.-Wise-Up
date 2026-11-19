@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DicaCard } from '../components/DicaCard';
 import { EstadoDaApi } from '../components/EstadoDaApi';
 import { Container, Rotulo, Titulo } from '../components/Secao';
+import { TIPOS_DE_DICA, rotuloDe } from '../data/opcoes';
 import { useApi } from '../hooks/useApi';
 import { useTitulo } from '../hooks/useTitulo';
 import { listarDicas } from '../services/dicas';
@@ -48,7 +49,7 @@ export function Dicas() {
                           tipo === t ? 'border-ink bg-ink text-paper' : 'border-gray-400 hover:border-ink'
                         }`}
                       >
-                        {t === TODAS ? 'Todas' : t}
+                        {t === TODAS ? 'Todas' : rotuloDe(TIPOS_DE_DICA, t)}
                       </button>
                     ))}
                   </div>

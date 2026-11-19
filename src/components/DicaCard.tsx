@@ -1,6 +1,7 @@
 import type { Dica } from '../types/api';
 import { formatarData, urlSegura } from '../utils/textos';
 import { IconeCheck, IconeExterno } from './Icones';
+import { TIPOS_DE_DICA, rotuloDe } from '../data/opcoes';
 
 interface DicaCardProps {
   dica: Dica;
@@ -16,7 +17,7 @@ export function DicaCard({ dica, aplicada = false }: DicaCardProps) {
     <article className="flex h-full flex-col rounded-3xl border border-gray-300 bg-paper p-6">
       <div className="flex flex-wrap items-center gap-2">
         <span className="rounded-full border border-ink px-3 py-1 text-xs font-semibold uppercase tracking-label">
-          {dica.tipo}
+          {rotuloDe(TIPOS_DE_DICA, dica.tipo)}
         </span>
         {aplicada && (
           <span className="inline-flex items-center gap-1 rounded-full bg-ink px-3 py-1 text-xs font-semibold uppercase tracking-label text-paper">
