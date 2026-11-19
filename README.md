@@ -111,7 +111,7 @@ direto funciona. Configure `VITE_API_BASE_URL` nas variáveis de ambiente do pro
 ## Links
 
 - **GitHub:** [github.com/Suzart007/Flick-co.-Wise-Up](https://github.com/Suzart007/Flick-co.-Wise-Up)
-- **Vercel (site publicado):** [PREENCHER URL da Vercel]
+- **Vercel (site publicado):** [wise-up-flick-co.vercel.app](https://wise-up-flick-co.vercel.app)
 - **API (Render):** [PREENCHER URL da API]
 
 ## Contato
