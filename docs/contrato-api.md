@@ -1,8 +1,7 @@
 # Contrato da API (implementado em `Wise Up - Java`)
 
 Este é o contrato entre o front-end do WISE UP e a API Java (Spring Boot, Domain Driven Design Using Java).
-Ele foi escrito pelo front e **já está implementado** na pasta `Wise Up - Java` (testado com 37 testes automatizados e
-com o fluxo completo do front). Se algo mudar no Java, ajuste **este arquivo e os tipos em `src/types/api.ts`**.
+Ele foi escrito pelo front e **já está implementado** na pasta `Wise Up - Java` (testado com 43 testes automatizados, com o fluxo completo do front e com a API rodando no Oracle da FIAP). Se algo mudar no Java, ajuste **este arquivo e os tipos em `src/types/api.ts`**.
 
 - **URL base:** variável `VITE_API_BASE_URL` (sem barra no final). Exemplo: `https://wise-up-api.onrender.com`.
 - **Formato:** JSON (`Content-Type: application/json`), datas como `AAAA-MM-DD`.
@@ -15,11 +14,11 @@ com o fluxo completo do front). Se algo mudar no Java, ajuste **este arquivo e o
 | Método | Rota | Corpo | Resposta |
 |---|---|---|---|
 | GET | `/redes-sociais` | — | `200` `[{ id, nome, categoria }]` |
-| GET | `/instituicoes` | — | `200` `[{ id, nome, tipo }]` |
+| GET | `/instituicoes` | — | `200` `[{ id, nome, tipo, cidade, dataParceria }]` (tipo: `ESCOLA`, `UNIVERSIDADE`, `EMPRESA` ou `ONG`) |
 | GET | `/dicas` | — | `200` `[{ id, descricao, tipo, nivelRiscoAlvo, fonte: { id, nome, titulo, dataPublicacao, url } }]` |
 | POST | `/autoavaliacoes` | veja abaixo | `201` + `Location` + `{ id, nivelRisco, horasTotaisDia }` · `400` · `404` · `409` |
 | GET | `/autoavaliacoes/{id}` | — | `200` (veja abaixo) · `404` |
-| DELETE | `/autoavaliacoes/{id}` | — | `204` · `404` (usos e retornos saem junto) |
+| DELETE | `/autoavaliacoes/{id}` | — | `204` · `404` (usos, plano de dicas e retornos saem junto) |
 | POST | `/autoavaliacoes/{id}/retornos` | `{ horasTotaisDepois, nivelFocoDepois, dicasAplicadasIds }` | `201` + `Location` + `{ id, dataRetorno, horasTotaisDepois, nivelFocoDepois, dicasAplicadasIds }` · `400` · `404` · `409` |
 | GET | `/autoavaliacoes/{id}/retornos` | — | `200` lista de retornos · `404` |
 
@@ -28,10 +27,10 @@ com o fluxo completo do front). Se algo mudar no Java, ajuste **este arquivo e o
 | Recurso | Rotas |
 |---|---|
 | Redes sociais | `POST/GET /redes-sociais`, `GET/PUT/DELETE /redes-sociais/{id}` (`409` se a rede já foi usada) |
-| Instituições | `POST/GET /instituicoes`, `GET/PUT/DELETE /instituicoes/{id}` (`409` se há autoavaliações ligadas) |
+| Instituições | `POST/GET /instituicoes`, `GET/PUT/DELETE /instituicoes/{id}` (`409` se há participantes ligados) |
 | Fontes | `POST/GET /fontes`, `GET/PUT/DELETE /fontes/{id}` (`409` se a fonte ainda tem dicas) |
 | Dicas de uma fonte (1:N) | `GET /fontes/{id}/dicas`, `POST /fontes/{id}/dicas` |
-| Dicas | `POST/GET /dicas`, `GET/PUT/DELETE /dicas/{id}` (`409` se já foi marcada como aplicada) |
+| Dicas | `POST/GET /dicas`, `GET/PUT/DELETE /dicas/{id}` (`409` se a dica já foi sugerida em algum plano) |
 | Autoavaliações | `GET /autoavaliacoes` (resumo), `PUT /autoavaliacoes/{id}` |
 | Retornos de uma autoavaliação (1:N) | `GET/PUT/DELETE /autoavaliacoes/{id}/retornos/{retornoId}` |
 | Status | `GET /` → `{ "aplicacao": "...", "status": "no ar" }` |
@@ -41,17 +40,21 @@ com o fluxo completo do front). Se algo mudar no Java, ajuste **este arquivo e o
 ```json
 {
   "instituicaoId": 1,
-  "faixaEtaria": "18_24",
-  "ocupacao": "GRADUACAO",
+  "canalAcesso": "INSTITUICAO",
+  "faixaEtaria": "18-24",
+  "ocupacao": "ESTUDANTE_SUPERIOR",
   "horasSono": 7,
   "nivelFoco": 3,
   "usos": [{ "redeSocialId": 1, "horasDia": 2.5 }]
 }
 ```
 
+- Os valores são os do banco de dados do grupo (tabela `tb_participante`): a API cria um **participante anônimo** (só um código
+  como `WU-A7K29Q`, sem nome, CPF ou contato) e a autoavaliação dele.
 - `instituicaoId` é opcional (omitido quando a pessoa prefere não informar).
-- `faixaEtaria`: `ATE_17` | `18_24` | `25_34` | `35_MAIS`.
-- `ocupacao`: `ENSINO_MEDIO` | `TECNICO` | `GRADUACAO` | `POS_GRADUACAO` | `OUTRO`.
+- `canalAcesso` é opcional: `LINK` (padrão) | `QR_CODE` | `INSTITUICAO`. Com `INSTITUICAO`, a `instituicaoId` é obrigatória (`400`).
+- `faixaEtaria`: `15-17` | `18-24` | `25-34` | `35+`.
+- `ocupacao`: `ESTUDANTE_MEDIO` | `ESTUDANTE_SUPERIOR` | `ESTUDANTE_TRABALHADOR`.
 - `horasSono`: número de 0 a 24. `horasDia` (em cada uso): maior que 0 e até 24. **Redes + sono não passam de 24**: se
   passar, a API responde `409`. A mesma rede não pode aparecer duas vezes (`409`). Rede ou instituição inexistente: `404`.
 - `nivelFoco`: inteiro de 1 a 5. `usos` pode ser lista vazia.
@@ -63,29 +66,35 @@ com o fluxo completo do front). Se algo mudar no Java, ajuste **este arquivo e o
 {
   "id": 12,
   "dataAvaliacao": "2026-11-17",
+  "codigoAnonimo": "WU-A7K29Q",
+  "canalAcesso": "LINK",
   "instituicaoId": null,
-  "faixaEtaria": "18_24",
-  "ocupacao": "GRADUACAO",
+  "faixaEtaria": "18-24",
+  "ocupacao": "ESTUDANTE_SUPERIOR",
   "horasSono": 7.0,
   "nivelFoco": 3,
   "nivelRisco": "MODERADO",
   "horasTotaisDia": 5.5,
   "usos": [{ "redeSocial": { "id": 1, "nome": "Instagram" }, "horasDia": 2.5 }],
-  "dicas": [{ "id": 1, "descricao": "...", "tipo": "Sono", "nivelRiscoAlvo": "MODERADO",
+  "dicas": [{ "id": 1, "descricao": "...", "tipo": "SONO", "nivelRiscoAlvo": "MODERADO",
               "fonte": { "id": 1, "nome": "...", "titulo": "...", "dataPublicacao": null, "url": "https://..." },
               "aplicada": false }]
 }
 ```
 
 - `nivelRisco`: `BAIXO` | `MODERADO` | `ALTO`. Na tela aparece como **"nível de atenção"** (nunca "risco" ou "diagnóstico").
-- `dicas`: as dicas do nível da pessoa **e dos níveis abaixo** (quem está em ALTO recebe ALTO + MODERADO + BAIXO).
-  `aplicada` fica `true` quando alguma reavaliação marcou aquela dica.
+- `nivelRisco` é calculado pela API com a regra RN10 do projeto de banco: **ALTO** se 6 h ou mais por dia nas redes, ou sono menor
+  que 6 h com foco 1 ou 2; **MODERADO** se 3 h ou mais nas redes, ou sono menor que 7 h, ou foco até 3; senão **BAIXO**. É um critério
+  de triagem, não um diagnóstico.
+- `dicas`: o **plano de dicas** da pessoa (tabela `tb_plano_dica`): as dicas do nível dela **e dos níveis abaixo** (quem está em ALTO
+  recebe ALTO + MODERADO + BAIXO), gravadas quando a autoavaliação é criada. `aplicada` fica `true` quando uma reavaliação marcou a dica.
+- `tipo` da dica: `BLOQUEIO` | `NOTIFICACAO` | `DESINSTALAR` | `SONO` | `ROTINA` (o front mostra o texto bonito em `src/data/opcoes.ts`).
 - `dataPublicacao` da fonte: `AAAA-MM-DD` ou `null` (fonte ainda sem data confirmada). `url` começa com `http://` ou `https://`.
 - O front calcula `horasTotais` somando `usos[].horasDia` e `dias por ano = horas × 365 ÷ 24`.
 
 ### POST `/autoavaliacoes/{id}/retornos`
 
-- `horasTotaisDepois`: 0 a 24. `nivelFocoDepois`: 1 a 5. `dicasAplicadasIds`: lista (pode ser vazia) de dicas que existam (`404` se alguma não existir).
+- `horasTotaisDepois`: 0 a 24. `nivelFocoDepois`: 1 a 5. `dicasAplicadasIds`: lista (pode ser vazia) de dicas que existam (`404` se alguma não existir). Cada dica vira `aplicada = S` no plano da autoavaliação.
 - Com `RETORNO_DIAS_MINIMOS` maior que 0 no servidor (14 = duas semanas), a reavaliação antes do prazo responde `409`.
   Por padrão é `0` (sem espera), para poder demonstrar.
 
