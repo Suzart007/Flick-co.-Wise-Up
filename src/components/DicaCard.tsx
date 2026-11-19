@@ -8,7 +8,7 @@ interface DicaCardProps {
   aplicada?: boolean;
 }
 
-/** Cartão de dica prática com a fonte sempre visível (nome, título, data e link). */
+/** Cartão de dica prática com a fonte sempre visível (nome, título, data quando houver e link). */
 export function DicaCard({ dica, aplicada = false }: DicaCardProps) {
   const link = dica.fonte ? urlSegura(dica.fonte.url) : null;
 
@@ -33,8 +33,8 @@ export function DicaCard({ dica, aplicada = false }: DicaCardProps) {
         {dica.fonte ? (
           <>
             <p className="mt-1">
-              <span className="font-semibold text-ink">{dica.fonte.nome}</span> · {dica.fonte.titulo} ·{' '}
-              {dica.fonte.dataPublicacao ? formatarData(dica.fonte.dataPublicacao) : 'data a confirmar'}
+              <span className="font-semibold text-ink">{dica.fonte.nome}</span> · {dica.fonte.titulo}
+              {dica.fonte.dataPublicacao && <> · {formatarData(dica.fonte.dataPublicacao)}</>}
             </p>
             {link && (
               <a
@@ -50,7 +50,7 @@ export function DicaCard({ dica, aplicada = false }: DicaCardProps) {
             )}
           </>
         ) : (
-          <p className="mt-1">[CONFIRMAR FONTE E DATA]</p>
+          <p className="mt-1">Sem fonte cadastrada.</p>
         )}
       </div>
     </article>

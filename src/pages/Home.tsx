@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ButtonLink } from '../components/Button';
 import { Card } from '../components/Card';
+import { IconeExterno } from '../components/Icones';
 import { MiniCalculadora } from '../components/MiniCalculadora';
 import { Reveal } from '../components/Reveal';
 import { Container, Rotulo, Secao, Titulo } from '../components/Secao';
@@ -14,10 +15,26 @@ const PASSOS = [
   { numero: '04', titulo: 'Reavalie', texto: 'Depois de 2 semanas, responda de novo e compare o antes e o depois.' },
 ];
 
+// Cada associação aponta para um artigo científico revisado (link pelo DOI ou PubMed).
 const ASSOCIACOES = [
-  { titulo: 'Foco', texto: 'O uso excessivo de redes sociais está associado a mais dificuldade de manter a atenção.' },
-  { titulo: 'Sono', texto: 'Telas à noite estão associadas a dormir mais tarde e a um sono de pior qualidade.' },
-  { titulo: 'Humor', texto: 'O uso intenso está associado a piora de ansiedade e de humor em parte das pessoas.' },
+  {
+    titulo: 'Foco',
+    texto: 'O uso excessivo de redes sociais está associado a mais dificuldade de manter a atenção.',
+    fonte: { nome: 'Ra et al., JAMA (2018)', url: 'https://doi.org/10.1001/jama.2018.8931' },
+  },
+  {
+    titulo: 'Sono',
+    texto: 'O uso intenso de redes sociais está associado a um sono de pior qualidade.',
+    fonte: { nome: 'Alonzo et al., Sleep Medicine Reviews (2021)', url: 'https://pubmed.ncbi.nlm.nih.gov/33385767/' },
+  },
+  {
+    titulo: 'Humor',
+    texto: 'O uso intenso está associado a piora de ansiedade e de humor em parte das pessoas.',
+    fonte: {
+      nome: 'Keles et al., International Journal of Adolescence and Youth (2020)',
+      url: 'https://doi.org/10.1080/02673843.2019.1590851',
+    },
+  },
 ];
 
 export function Home() {
@@ -104,9 +121,16 @@ export function Home() {
                 <Card tom="escuro" className="h-full !border-line">
                   <h3 className="text-2xl font-semibold tracking-display">{item.titulo}</h3>
                   <p className="mt-3 text-muted">{item.texto}</p>
-                  <p className="mt-4 text-xs font-semibold uppercase tracking-label text-orange-soft">
-                    [CONFIRMAR FONTE E DATA]
-                  </p>
+                  <a
+                    href={item.fonte.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex min-h-8 items-center gap-1.5 text-sm text-orange-soft underline decoration-1 underline-offset-4 hover:text-paper"
+                  >
+                    Fonte: {item.fonte.nome}
+                    <IconeExterno className="size-3.5 shrink-0" />
+                    <span className="sr-only">(abre em nova aba)</span>
+                  </a>
                 </Card>
               </Reveal>
             </li>

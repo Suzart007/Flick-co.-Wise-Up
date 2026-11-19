@@ -1,9 +1,17 @@
 import { Card } from '../components/Card';
-import { IconeCadeado } from '../components/Icones';
+import { IconeCadeado, IconeExterno } from '../components/Icones';
 import { Reveal } from '../components/Reveal';
 import { Container, Rotulo, Secao, Titulo } from '../components/Secao';
 import { ButtonLink } from '../components/Button';
 import { useTitulo } from '../hooks/useTitulo';
+
+// Artigos científicos revisados que sustentam o parágrafo "O problema" (link pelo DOI ou PubMed).
+const FONTES_PROBLEMA = [
+  { nome: 'Ra et al. (2018): atenção', url: 'https://doi.org/10.1001/jama.2018.8931' },
+  { nome: 'Alonzo et al. (2021): sono', url: 'https://pubmed.ncbi.nlm.nih.gov/33385767/' },
+  { nome: 'Marker et al. (2018): desempenho escolar', url: 'https://doi.org/10.1007/s10648-017-9430-6' },
+  { nome: 'Keles et al. (2020): ansiedade e humor', url: 'https://doi.org/10.1080/02673843.2019.1590851' },
+];
 
 const CUIDADOS = [
   'É uma autoavaliação: mostra um panorama de uso, sem rótulos clínicos.',
@@ -41,8 +49,27 @@ export function Sobre() {
             <div className="space-y-5 text-lg text-gray-700">
               <p>
                 O uso excessivo de redes sociais está associado a piora de foco, de sono e de produtividade, e também a
-                mais ansiedade e pior humor. <strong className="text-ink">[CONFIRMAR FONTE E DATA]</strong>
+                mais ansiedade e pior humor.
               </p>
+              <div className="text-sm text-gray-600">
+                <p className="text-xs font-semibold uppercase tracking-label">Fontes</p>
+                <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
+                  {FONTES_PROBLEMA.map((fonte) => (
+                    <li key={fonte.url}>
+                      <a
+                        href={fonte.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-8 items-center gap-1 underline decoration-orange decoration-2 underline-offset-4 hover:text-ink"
+                      >
+                        {fonte.nome}
+                        <IconeExterno className="size-3.5 shrink-0" />
+                        <span className="sr-only">(abre em nova aba)</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <p>
                 Muita gente não percebe quanto tempo passa nas redes. Bloqueadores de aplicativos ajudam, mas só quem já
                 percebeu o problema chega até eles.
