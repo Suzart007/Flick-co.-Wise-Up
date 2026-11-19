@@ -5,7 +5,7 @@ Front-end do projeto **WISE UP**, da equipe **Flick Co.**, para a disciplina **F
 
 ## Objetivo
 
-O uso excessivo de redes sociais está associado a piora de foco, sono e produtividade, e muita gente não percebe ou da a importância necessária ao
+O uso excessivo de redes sociais está associado a piora de foco, sono e produtividade, e muita gente não percebe ou não dá a importância necessária ao
 problema. O WISE UP **conscientiza primeiro** (autoavaliação anônima, panorama com "X horas por dia equivalem a Y dias
 por ano" e dicas com fonte) e **orienta ações práticas depois**, com reavaliação após 2 semanas.
 

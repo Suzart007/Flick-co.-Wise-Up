@@ -1,7 +1,7 @@
 # Contrato da API (implementado em `Wise Up - Java`)
 
 Este é o contrato entre o front-end do WISE UP e a API Java (Spring Boot, Domain Driven Design Using Java).
-Ele foi escrito pelo front e **já está implementado** na pasta `Wise Up - Java` (testado com 38 testes automatizados e
+Ele foi escrito pelo front e **já está implementado** na pasta `Wise Up - Java` (testado com 37 testes automatizados e
 com o fluxo completo do front). Se algo mudar no Java, ajuste **este arquivo e os tipos em `src/types/api.ts`**.
 
 - **URL base:** variável `VITE_API_BASE_URL` (sem barra no final). Exemplo: `https://wise-up-api.onrender.com`.
