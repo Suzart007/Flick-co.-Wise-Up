@@ -69,7 +69,7 @@ npm run preview          # serve o build em http://localhost:4173
 
 | Variável | Para quê |
 |---|---|
-| `VITE_API_BASE_URL` | URL base da API Java, sem barra no final. Valor publicado: [PREENCHER URL da API no Render]. **Na Vercel:** Project Settings → Environment Variables (marque Production e Preview). |
+| `VITE_API_BASE_URL` | URL base da API Java, sem barra no final. Valor publicado: https://flick-co-wise-up-api.onrender.com. **Na Vercel:** Project Settings → Environment Variables (marque Production e Preview). |
 
 Sem essa variável o app abre normalmente, mas as telas que usam a API mostram a mensagem "A URL da API ainda não foi
 configurada". Depois de alterar o `.env`, reinicie o `npm run dev`.
@@ -112,7 +112,7 @@ direto funciona. Configure `VITE_API_BASE_URL` nas variáveis de ambiente do pro
 
 - **GitHub:** [github.com/Suzart007/Flick-co.-Wise-Up](https://github.com/Suzart007/Flick-co.-Wise-Up)
 - **Vercel (site publicado):** [wise-up-flick-co.vercel.app](https://wise-up-flick-co.vercel.app)
-- **API (Render):** [PREENCHER URL da API]
+- **API (Render):** https://flick-co-wise-up-api.onrender.com
 
 ## Contato
 
