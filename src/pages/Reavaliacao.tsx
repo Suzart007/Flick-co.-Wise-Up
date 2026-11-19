@@ -81,6 +81,8 @@ function FormularioRetorno({ id, antes }: { id: string; antes: Autoavaliacao }) 
         dicasAplicadasIds: form.dicasAplicadasIds,
       });
       setConcluido(true);
+      // O formulário some e dá lugar à confirmação: sobe a tela para a mensagem de sucesso ficar visível.
+      window.scrollTo(0, 0);
     } catch (e) {
       setErroEnvio(comoApiError(e));
     } finally {
@@ -179,8 +181,25 @@ function FormularioRetorno({ id, antes }: { id: string; antes: Autoavaliacao }) 
       </fieldset>
 
       {erroEnvio && (
-        <Alert tipo="erro" titulo="Não conseguimos registrar sua reavaliação">
+        <Alert
+          tipo="erro"
+          titulo="Não conseguimos registrar sua reavaliação"
+          acao={
+            <Button type="submit" carregando={enviando}>
+              Tentar novamente
+            </Button>
+          }
+        >
           {erroEnvio.message}
+          {Object.keys(erroEnvio.campos).length > 0 && (
+            <ul className="mt-2 list-disc pl-5">
+              {Object.entries(erroEnvio.campos).map(([campo, msg]) => (
+                <li key={campo}>
+                  {campo}: {msg}
+                </li>
+              ))}
+            </ul>
+          )}
         </Alert>
       )}
 
