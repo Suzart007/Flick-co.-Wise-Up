@@ -9,7 +9,10 @@ export interface RedeSocial {
 export interface Instituicao {
   id: number;
   nome: string;
+  /** ESCOLA, UNIVERSIDADE, EMPRESA ou ONG. */
   tipo: string;
+  cidade?: string | null;
+  dataParceria?: string | null;
 }
 
 export interface Fonte {
